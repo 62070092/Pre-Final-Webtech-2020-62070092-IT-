@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <title>Pre-final-1</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row" id="songList"></div>
+    </div>
+    <script>
+        let requestURL = 'ezquiz.json'; 
+        let request = new XMLHttpRequest(); 
+        request.onreadystatechange = function () { 
+            if (request.readyState == 4 && request.status == 200) {             
+                dataReportStatus(JSON.parse(request.responseText));            
+            } }; 
+        request.open("GET", requestURL, true); 
+        request.send(); 
+        
+        function dataReportStatus(data) { 
+            var songList = document.getElementById("songList")
+            for(let song of data){
+                let el = document.createElement("div");
+                el.setAttribute("class", "col-2");
+                let img = document.createElement("img");
+                img.setAttribute("src", song.tracks.items.images.url);
+                img.setAttribute("class", "img-fluid rounded");
+                el.appendChild(img);
+                el.innerHTML += "<class='text-muted' style='font-size: 15px;'>" + song.name+ "";
+                el.innerHTML += "<p class='text-muted' style='font-size: 12px;'>" + song.release_date + "</p>";
+                el.setAttribute("style", "margin-top:10px;")
+                songList.appendChild(el);
+
+            }
+        }
+    </script> 
+</body>
+</html>
